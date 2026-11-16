@@ -864,24 +864,17 @@ public class EntityMaid extends TamableAnimal implements CrossbowAttackMob, IMai
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (MinecraftForge.EVENT_BUS.post(new MaidAttackEvent(this, source, amount))) {
-            return false;
-        }
-        if (source.getEntity() instanceof Player player && this.isAlliedTo(player)) {
-            // 主人和同 Team 玩家对自己女仆的伤害数值为 1/5，最大为 2
-            amount = Mth.clamp(amount / 5, 0, 2);
-            return super.hurt(source, amount);
-        }
-        // 使用盾牌
-        if (source.isProjectile() && this.canUseShield()) {
-            boolean isUsingShield = this.isUsingItem() && this.getUsedItemHand() == InteractionHand.OFF_HAND;
-            if (!isUsingShield) {
-                this.startUsingItem(InteractionHand.OFF_HAND);
-                // 使用五秒的盾牌
-                this.passiveUseShieldTick = 100;
-            }
-        }
-        return super.hurt(source, amount);
+        return false;
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return true;
     }
 
     /**
