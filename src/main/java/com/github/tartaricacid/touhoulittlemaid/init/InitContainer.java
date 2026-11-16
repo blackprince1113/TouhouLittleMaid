@@ -5,6 +5,7 @@ import com.github.tartaricacid.touhoulittlemaid.inventory.container.backpack.*;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.config.MaidConfigContainer;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.other.PicnicBasketContainer;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.other.WirelessIOContainer;
+import com.github.tartaricacid.touhoulittlemaid.inventory.container.other.SoulSpellContainer;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.task.AttackTaskConfigContainer;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.task.DefaultMaidTaskConfigContainer;
 import net.minecraft.world.inventory.MenuType;
@@ -27,6 +28,7 @@ public final class InitContainer {
     public static final RegistryObject<MenuType<MaidConfigContainer>> MAID_CONFIG_CONTAINER = CONTAINER_TYPE.register("maid_config_container", () -> MaidConfigContainer.TYPE);
     public static final RegistryObject<MenuType<WirelessIOContainer>> WIRELESS_IO_CONTAINER = CONTAINER_TYPE.register("wireless_io_container", () -> WirelessIOContainer.TYPE);
     public static final RegistryObject<MenuType<PicnicBasketContainer>> PICNIC_BASKET_CONTAINER = CONTAINER_TYPE.register("picnic_basket_container", () -> PicnicBasketContainer.TYPE);
+    public static final RegistryObject<MenuType<SoulSpellContainer>> SOUL_SPELL_CONTAINER = CONTAINER_TYPE.register("soul_spell_container", () -> SoulSpellContainer.TYPE);
     public static final RegistryObject<MenuType<DefaultMaidTaskConfigContainer>> DEFAULT_MAIK_TASK_CONFIG = CONTAINER_TYPE.register("default_maid_task_config_container", () -> DefaultMaidTaskConfigContainer.TYPE);
     public static final RegistryObject<MenuType<AttackTaskConfigContainer>> ATTACK_TASK_CONFIG = CONTAINER_TYPE.register("attack_task_config_container", () -> AttackTaskConfigContainer.TYPE);
 }

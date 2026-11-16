@@ -118,6 +118,8 @@ public final class NetworkHandler {
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         CHANNEL.registerMessage(45, TTSSystemAudioToClientMessage.class, TTSSystemAudioToClientMessage::encode, TTSSystemAudioToClientMessage::decode, TTSSystemAudioToClientMessage::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        CHANNEL.registerMessage(46, SoulSpellPageMessage.class, SoulSpellPageMessage::encode, SoulSpellPageMessage::decode, SoulSpellPageMessage::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
     }
 
     public static void sendToClientPlayer(Object message, Player player) {

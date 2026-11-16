@@ -42,6 +42,7 @@ import com.github.tartaricacid.touhoulittlemaid.entity.projectile.MaidFishingHoo
 import com.github.tartaricacid.touhoulittlemaid.entity.task.TaskIdle;
 import com.github.tartaricacid.touhoulittlemaid.entity.task.TaskManager;
 import com.github.tartaricacid.touhoulittlemaid.init.InitEntities;
+import com.github.tartaricacid.touhoulittlemaid.init.InitItems;
 import com.github.tartaricacid.touhoulittlemaid.init.InitSounds;
 import com.github.tartaricacid.touhoulittlemaid.init.InitTrigger;
 import com.github.tartaricacid.touhoulittlemaid.inventory.container.config.MaidConfigContainer;
@@ -49,6 +50,7 @@ import com.github.tartaricacid.touhoulittlemaid.inventory.handler.BaubleItemHand
 import com.github.tartaricacid.touhoulittlemaid.inventory.handler.MaidBackpackHandler;
 import com.github.tartaricacid.touhoulittlemaid.inventory.handler.MaidHandsInvWrapper;
 import com.github.tartaricacid.touhoulittlemaid.item.ItemFilm;
+import com.github.tartaricacid.touhoulittlemaid.item.ItemSmartSlab;
 import com.github.tartaricacid.touhoulittlemaid.mixin.MixinArrowEntity;
 import com.github.tartaricacid.touhoulittlemaid.network.NetworkHandler;
 import com.github.tartaricacid.touhoulittlemaid.network.message.ItemBreakMessage;
@@ -57,6 +59,7 @@ import com.github.tartaricacid.touhoulittlemaid.network.message.SendEffectMessag
 import com.github.tartaricacid.touhoulittlemaid.network.message.SyncYsmMaidDataMessage;
 import com.github.tartaricacid.touhoulittlemaid.util.ItemsUtil;
 import com.github.tartaricacid.touhoulittlemaid.util.ParseI18n;
+import com.github.tartaricacid.touhoulittlemaid.inventory.SoulSpellStorage;
 import com.github.tartaricacid.touhoulittlemaid.util.TeleportHelper;
 import com.github.tartaricacid.touhoulittlemaid.world.data.MaidWorldData;
 import com.google.common.collect.Lists;
@@ -491,6 +494,14 @@ public class EntityMaid extends TamableAnimal implements CrossbowAttackMob, IMai
                 SyncYsmMaidDataMessage message = new SyncYsmMaidDataMessage(this.getId(), this.rouletteAnim, this.rouletteAnimPlaying, this.roamingVars);
                 NetworkHandler.sendToTrackingEntity(message, this);
             }
+        }
+        if (!this.level.isClientSide && this.tickCount % 20 == 0 && !this.isOrderedToSit()
+                && this.getOwner() instanceof ServerPlayer owner && this.distanceToSqr(owner) > 60 * 60) {
+            ItemStack soulSpell = new ItemStack(InitItems.SMART_SLAB_HAS_MAID.get());
+            this.setHomeModeEnable(false);
+            ItemSmartSlab.storeMaidData(soulSpell, this);
+            SoulSpellStorage.add(owner, soulSpell);
+            this.discard();
         }
     }
 

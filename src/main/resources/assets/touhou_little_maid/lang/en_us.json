@@ -979,5 +979,8 @@
   "patchouli.touhou_little_maid.book.entries.overview.make_custom_chatbubble_text.pages.2.text": "There must be a type name on the first line of each page. It specifies under what circumstances the text is displayed.$(br2)The available type names are:$(br)Schedule Related:$(li)work: Displayed during any work schedule$(li)idle: Displayed during rest schedule or idle task$(li)sleep: Displayed when sleeping",
   "patchouli.touhou_little_maid.book.entries.overview.make_custom_chatbubble_text.pages.3.text": "Special Situation:$(li)morning: Displayed in the morning$(li)night: Displayed in the evening$(li)rain: Displayed when it rains$(li)snow: Displayed when it snows$(li)cold: Displayed when in a cold biome$(li)hot: Displayed when in a hot biome$(li)hurt: displayed when injured$(li)beg: Displayed when begging",
   "patchouli.touhou_little_maid.book.entries.overview.make_custom_chatbubble_text.pages.4.text": "Work Task:$(li)Will be displayed when in a specific working task, such as attack, farm, etc.$(br2)When you have finished writing all of the text, you only need to right click on the maid to register them as bubble text.$(br)If you right click the maid with a Book and Quill (or Written Book) while holding down the crouch key, you can clear the maid's bubble text.$(br)If you hold a blank Book and Quill and right click on a maid who already has a text, you can copy the maid's text to the book.",
-  "patchouli.touhou_little_maid.book.entries.overview.make_custom_chatbubble_text.pages.5.text": "When the advanced tooltips function (F3+H) is turned on, you can see the task id."
+  "patchouli.touhou_little_maid.book.entries.overview.make_custom_chatbubble_text.pages.5.text": "When the advanced tooltips function (F3+H) is turned on, you can see the task id.",
+  "gui.touhou_little_maid.soul_spell.title": "Soul Spell Vault",
+  "gui.touhou_little_maid.soul_spell.header": "Soul Vault  %s/%s",
+  "gui.touhou_little_maid.soul_spell.page": "Page %s / %s"
 }
