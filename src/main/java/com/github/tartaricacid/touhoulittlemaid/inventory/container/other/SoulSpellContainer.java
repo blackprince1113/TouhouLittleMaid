@@ -1,7 +1,6 @@
 package com.github.tartaricacid.touhoulittlemaid.inventory.container.other;
 
 import com.github.tartaricacid.touhoulittlemaid.inventory.SoulSpellStorage;
-import com.github.tartaricacid.touhoulittlemaid.init.InitItems;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
@@ -30,9 +29,7 @@ public class SoulSpellContainer extends AbstractContainerMenu {
         SoulSpellStorage.loadPage(playerInventory.player, this.page, display);
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addSlot(new Slot(display, col + row * 9, 8 + col * 18, 18 + row * 18) {
-                    @Override public boolean mayPlace(net.minecraft.world.item.ItemStack stack) { return stack.is(InitItems.SMART_SLAB_HAS_MAID.get()); }
-                });
+                this.addSlot(new Slot(display, col + row * 9, 8 + col * 18, 18 + row * 18));
             }
         }
         for (int row = 0; row < 3; row++) for (int col = 0; col < 9; col++)
@@ -44,8 +41,29 @@ public class SoulSpellContainer extends AbstractContainerMenu {
     public int getPageCount() { return pageCount; }
     @Override public void clicked(int slotId, int button, ClickType clickType, Player player) {
         super.clicked(slotId, button, clickType, player);
-        if (slotId >= 0 && slotId < PAGE_SIZE) SoulSpellStorage.savePage(player, page, display);
+        if (slotId >= 0 && slotId < this.slots.size()) SoulSpellStorage.savePage(player, page, display);
     }
     @Override public boolean stillValid(Player player) { return true; }
-    @Override public net.minecraft.world.item.ItemStack quickMoveStack(Player player, int index) { return net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public net.minecraft.world.item.ItemStack quickMoveStack(Player player, int index) {
+        if (index < 0 || index >= this.slots.size()) return net.minecraft.world.item.ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (!slot.hasItem()) return net.minecraft.world.item.ItemStack.EMPTY;
+
+        net.minecraft.world.item.ItemStack stack = slot.getItem();
+        net.minecraft.world.item.ItemStack original = stack.copy();
+        boolean moved;
+        if (index < PAGE_SIZE) {
+            moved = this.moveItemStackTo(stack, PAGE_SIZE, this.slots.size(), true);
+        } else {
+            moved = this.moveItemStackTo(stack, 0, PAGE_SIZE, false);
+        }
+        if (!moved) return net.minecraft.world.item.ItemStack.EMPTY;
+
+        if (stack.isEmpty()) slot.set(net.minecraft.world.item.ItemStack.EMPTY);
+        else slot.setChanged();
+        slot.onTake(player, stack);
+        SoulSpellStorage.savePage(player, page, display);
+        return original;
+    }
 }
