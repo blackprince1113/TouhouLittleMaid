@@ -82,7 +82,7 @@ public class ItemFoxScroll extends Item {
                 List<FoxScrollMessage.FoxScrollData> scrollData = data.computeIfAbsent(info.getDimension(), dim -> Lists.newArrayList());
                 scrollData.add(new FoxScrollMessage.FoxScrollData(info.getChunkPos(), info.getName(), info.getTimestamp()));
             });
-            NetworkHandler.sendToClientPlayer(new FoxScrollMessage(data), player);
+            NetworkHandler.sendToClientPlayer(new FoxScrollMessage(data, item.getItem() == InitItems.RED_FOX_SCROLL.get()), player);
             if (player instanceof ServerPlayer serverPlayer) {
                 if (item.getItem() == InitItems.RED_FOX_SCROLL.get()) {
                     InitTrigger.MAID_EVENT.trigger(serverPlayer, TriggerType.USE_RED_FOX_SCROLL);

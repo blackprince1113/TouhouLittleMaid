@@ -435,6 +435,7 @@
   "gui.touhou_little_maid.fox_scroll.distance.same_dimension": "Distance: %dm",
   "gui.touhou_little_maid.fox_scroll.distance.different_dimension": "Distance: ???m",
   "gui.touhou_little_maid.fox_scroll.track": "Track",
+  "gui.touhou_little_maid.fox_scroll.load": "Load",
   "gui.touhou_little_maid.fox_scroll.empty": "No maid coordinates found",
   "gui.touhou_little_maid.optifine_warning.title": "Touhou Little Maid Optifine Warning",
   "gui.touhou_little_maid.optifine_warning.text": "Before proceeding, please note that Optifine is known to cause crashes, multipart entity visual bugs and many other issues.\n\nBefore reporting a bug, please remove Optifine first and check again to see if the bug is still present.\n\nOptifine-related issues are not solvable on Touhou Little Maid's end!\n\nYou can use Oculus and Embeddium mods as alternatives to Optifine.",

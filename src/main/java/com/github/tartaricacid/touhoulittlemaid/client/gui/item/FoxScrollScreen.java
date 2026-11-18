@@ -18,14 +18,16 @@ import java.util.Map;
 public class FoxScrollScreen extends Screen {
     private static final int PER_PAGE_COUNT = 5;
     private final Map<String, List<FoxScrollMessage.FoxScrollData>> data;
+    private final boolean redFoxScroll;
     private int leftPos;
     private int topPos;
     private String selectDim;
     private int page = 0;
 
-    public FoxScrollScreen(Map<String, List<FoxScrollMessage.FoxScrollData>> data) {
+    public FoxScrollScreen(Map<String, List<FoxScrollMessage.FoxScrollData>> data, boolean redFoxScroll) {
         super(Component.literal("Red Fox Scroll"));
         this.data = data;
+        this.redFoxScroll = redFoxScroll;
         if (!this.data.isEmpty()) {
             this.selectDim = this.data.keySet().stream().findFirst().get();
         }
@@ -62,8 +64,13 @@ public class FoxScrollScreen extends Screen {
                 if (i < scrollData.size()) {
                     FoxScrollMessage.FoxScrollData info = scrollData.get(i);
                     this.addRenderableWidget(new FlatColorButton(leftPos + 400 - 90, offsetIn + 11, 60, 20, Component.translatable("gui.touhou_little_maid.fox_scroll.track"), b -> {
-                        NetworkHandler.CHANNEL.sendToServer(new SetScrollData(this.selectDim, info.getPos()));
+                        NetworkHandler.CHANNEL.sendToServer(new SetScrollData(this.selectDim, info.getPos(), false));
                     }));
+                    if (this.redFoxScroll) {
+                        this.addRenderableWidget(new FlatColorButton(leftPos + 400 - 154, offsetIn + 11, 60, 20,
+                                Component.translatable("gui.touhou_little_maid.fox_scroll.load"), b ->
+                                NetworkHandler.CHANNEL.sendToServer(new SetScrollData(this.selectDim, info.getPos(), true))));
+                    }
                     offsetIn = offsetIn + 42;
                 }
             }

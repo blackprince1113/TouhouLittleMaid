@@ -17,12 +17,15 @@ import java.util.function.Supplier;
 
 public class FoxScrollMessage {
     private final Map<String, List<FoxScrollData>> data;
+    private final boolean redFoxScroll;
 
-    public FoxScrollMessage(Map<String, List<FoxScrollData>> data) {
+    public FoxScrollMessage(Map<String, List<FoxScrollData>> data, boolean redFoxScroll) {
         this.data = data;
+        this.redFoxScroll = redFoxScroll;
     }
 
     public static void encode(FoxScrollMessage message, FriendlyByteBuf buf) {
+        buf.writeBoolean(message.redFoxScroll);
         buf.writeVarInt(message.data.size());
         message.data.forEach((dim, scrollData) -> {
             buf.writeVarInt(scrollData.size());
@@ -32,6 +35,7 @@ public class FoxScrollMessage {
     }
 
     public static FoxScrollMessage decode(FriendlyByteBuf buf) {
+        boolean redFoxScroll = buf.readBoolean();
         Map<String, List<FoxScrollData>> data = Maps.newHashMap();
         int dimLength = buf.readVarInt();
         for (int i = 0; i < dimLength; i++) {
@@ -43,7 +47,7 @@ public class FoxScrollMessage {
             }
             data.put(dim, scrollData);
         }
-        return new FoxScrollMessage(data);
+        return new FoxScrollMessage(data, redFoxScroll);
     }
 
     public static void handle(FoxScrollMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
@@ -56,7 +60,7 @@ public class FoxScrollMessage {
 
     @OnlyIn(Dist.CLIENT)
     private static void onHandle(FoxScrollMessage message) {
-        Minecraft.getInstance().setScreen(new FoxScrollScreen(message.data));
+        Minecraft.getInstance().setScreen(new FoxScrollScreen(message.data, message.redFoxScroll));
     }
 
     public static class FoxScrollData {
